@@ -2,7 +2,7 @@
 const options = {
   url: 'https://dev74924.service-now.com/',
   username: 'admin',
-  password: 'Service2020!',
+  password: 'Service2020',
 };
 
 

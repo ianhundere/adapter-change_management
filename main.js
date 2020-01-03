@@ -88,15 +88,19 @@ function processRequestResults(error, response, body, callback) {
    * This function must not check for a hibernating instance;
    * it must call function isHibernating.
    */
-  console.log('response', response);
-  console.log('error', error);
   if (error) {
     return callback(null, error);
   }
   if (isHibernating(response)) {
     return callback(null, 'ServiceNow Instance is Hibernating.');
   }
-  return callback(response);
+  if (!validResponseRegex.test(response.statusCode)) {
+    return callback(null, 'Invalid response, check statusCode.')
+  }
+    return callback({
+      body,
+      statusCode: response.statusCode,
+    });
 }
 
 /**
@@ -136,7 +140,6 @@ function sendRequest(callOptions, callback) {
     },
     ...rest,
   };
-  console.log('requestOptions', requestOptions);
   request(requestOptions, (error, response, body) => {
     processRequestResults(
       error,

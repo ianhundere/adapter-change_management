@@ -114,9 +114,8 @@ healthcheck(callback) {
       * healthcheck(), execute it passing the error seen as an argument
       * for the callback's errorMessage parameter.
       */
-
-      return emitOffline(this.id, callback, error)
-      
+      emitOffline()
+      return callback(null, error);
    } else {
      /**
       * Write this block.
@@ -128,9 +127,8 @@ healthcheck(callback) {
       * parameter as an argument for the callback function's
       * responseData parameter.
       */
-
-      return emitOnline(callback)
-
+      emitOnline()
+      return callback(result);
    }
  });
 }
